@@ -1,39 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAuthClient, requireAuth } from '@/lib/marketplace/api'
 
-// GET /api/marketplace/saved - Get user's saved listings (auth required)
+// GET /api/marketplace/transactions - Get user's transaction history (auth required)
 export async function GET(request: NextRequest) {
   try {
     const supabase = createAuthClient()
     const user = await requireAuth(supabase)
 
-    // Get saved listings with listing details
-    const { data, error } = await supabase
-      .from('saved_listings')
-      .select(`
-        id,
-        created_at,
-        listing:marketplace_listings (*)
-      `)
+    const { searchParams } = new URL(request.url)
+    const limit = Math.min(Number(searchParams.get('limit')) || 50, 100)
+    const offset = Number(searchParams.get('offset')) || 0
+
+    // Get user's transactions
+    const { data, error, count } = await supabase
+      .from('marketplace_transactions')
+      .select('*', { count: 'exact' })
       .eq('user_id', user.id)
       .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1)
 
     if (error) {
-      console.error('Error fetching saved listings:', error)
+      console.error('Error fetching transactions:', error)
       return NextResponse.json(
-        { error: 'Failed to fetch saved listings' },
+        { error: 'Failed to fetch transactions' },
         { status: 500 }
       )
     }
 
-    // Transform data to include listing details at top level
-    const savedListings = (data || []).map(item => ({
-      id: item.id,
-      created_at: item.created_at,
-      listing: item.listing
-    }))
-
-    return NextResponse.json({ saved: savedListings })
+    return NextResponse.json({
+      transactions: data || [],
+      pagination: {
+        limit,
+        offset,
+        total: count || 0
+      }
+    })
   } catch (error: any) {
     if (error.message === 'Authentication required') {
       return NextResponse.json(

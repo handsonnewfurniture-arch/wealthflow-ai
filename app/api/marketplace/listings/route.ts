@@ -1,90 +1,115 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
-import type { MarketplaceListing } from '@/lib/supabase'
+import { createServiceClient, createAuthClient, requireAuth } from '@/lib/marketplace/api'
+import { validateCreateListing } from '@/lib/marketplace/validation'
+import type { CreateListingRequest, ListingFilters } from '@/lib/marketplace/types'
+import { LISTING_STATUSES } from '@/lib/marketplace/constants'
 
-// GET /api/marketplace/listings - Get all listings with filters
+// GET /api/marketplace/listings - List listings with filters
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
 
-    // Extract query parameters
-    const state = searchParams.get('state')
-    const county = searchParams.get('county')
-    const status = searchParams.get('status') || 'active'
-    const listing_type = searchParams.get('listing_type')
-    const sort = searchParams.get('sort') || 'newest'
-    const limit = parseInt(searchParams.get('limit') || '50')
-    const offset = parseInt(searchParams.get('offset') || '0')
-    const search = searchParams.get('search')
-    const min_price = searchParams.get('min_price')
-    const max_price = searchParams.get('max_price')
-    const featured_only = searchParams.get('featured') === 'true'
+    // Parse filters from query params
+    const filters: ListingFilters = {
+      query: searchParams.get('query') || undefined,
+      state: searchParams.get('state') || undefined,
+      county: searchParams.get('county') || undefined,
+      listing_type: searchParams.get('listing_type') as any || undefined,
+      status: searchParams.get('status') as any || undefined,
+      parcel_apn: searchParams.get('parcel_apn') || undefined,
+      auction_date_from: searchParams.get('auction_date_from') || undefined,
+      auction_date_to: searchParams.get('auction_date_to') || undefined,
+      min_price: searchParams.get('min_price') ? Number(searchParams.get('min_price')) : undefined,
+      max_price: searchParams.get('max_price') ? Number(searchParams.get('max_price')) : undefined,
+      sort: (searchParams.get('sort') as any) || 'newest',
+      page: searchParams.get('page') ? Number(searchParams.get('page')) : 1,
+      pageSize: searchParams.get('pageSize') ? Number(searchParams.get('pageSize')) : 20,
+    }
 
-    // Build query
+    const supabase = createServiceClient()
+
+    // Build query - default to active listings only
     let query = supabase
       .from('marketplace_listings')
       .select('*', { count: 'exact' })
 
+    // Apply status filter (default to active only)
+    if (filters.status) {
+      query = query.eq('status', filters.status)
+    } else {
+      query = query.eq('status', 'active')
+    }
+
     // Apply filters
-    if (state) {
-      query = query.eq('state', state)
+    if (filters.state) {
+      query = query.eq('state', filters.state)
     }
 
-    if (county) {
-      query = query.eq('county', county)
+    if (filters.county) {
+      query = query.ilike('county', `%${filters.county}%`)
     }
 
-    if (status) {
-      query = query.eq('status', status)
+    if (filters.listing_type) {
+      query = query.eq('listing_type', filters.listing_type)
     }
 
-    if (listing_type) {
-      query = query.eq('listing_type', listing_type)
+    if (filters.parcel_apn) {
+      query = query.eq('parcel_apn', filters.parcel_apn)
     }
 
-    if (featured_only) {
-      query = query.eq('featured', true)
+    if (filters.auction_date_from) {
+      query = query.gte('auction_date_time', filters.auction_date_from)
     }
 
-    if (min_price) {
-      query = query.gte('asking_price', parseFloat(min_price))
+    if (filters.auction_date_to) {
+      query = query.lte('auction_date_time', filters.auction_date_to)
     }
 
-    if (max_price) {
-      query = query.lte('asking_price', parseFloat(max_price))
+    // Price filtering (check both starting_bid and buy_now_price)
+    if (filters.min_price !== undefined) {
+      query = query.or(`starting_bid.gte.${filters.min_price},buy_now_price.gte.${filters.min_price}`)
+    }
+
+    if (filters.max_price !== undefined) {
+      query = query.or(`starting_bid.lte.${filters.max_price},buy_now_price.lte.${filters.max_price}`)
     }
 
     // Full-text search
-    if (search) {
-      query = query.textSearch('property_address', search, {
-        type: 'websearch',
-        config: 'english'
-      })
+    if (filters.query) {
+      query = query.textSearch(
+        'fts',
+        filters.query.split(' ').map(term => term + ':*').join(' & '),
+        { type: 'websearch' }
+      )
     }
 
     // Sorting
-    switch (sort) {
+    switch (filters.sort) {
       case 'newest':
         query = query.order('created_at', { ascending: false })
         break
+      case 'oldest':
+        query = query.order('created_at', { ascending: true })
+        break
       case 'price_low':
-        query = query.order('asking_price', { ascending: true })
+        query = query.order('buy_now_price', { ascending: true, nullsFirst: false })
         break
       case 'price_high':
-        query = query.order('asking_price', { ascending: false })
+        query = query.order('buy_now_price', { ascending: false, nullsFirst: false })
         break
-      case 'roi':
-        query = query.order('interest_rate', { ascending: false })
-        break
-      case 'expiring':
-        query = query.order('redemption_deadline', { ascending: true })
+      case 'auction_date':
+        query = query.order('auction_date_time', { ascending: true, nullsFirst: false })
         break
       default:
-        query = query.order('created_at', { ascending: false })
+        query = query.order('published_at', { ascending: false, nullsFirst: false })
     }
 
     // Pagination
-    query = query.range(offset, offset + limit - 1)
+    const page = filters.page || 1
+    const pageSize = Math.min(filters.pageSize || 20, 100) // Cap at 100
+    const offset = (page - 1) * pageSize
+
+    query = query.range(offset, offset + pageSize - 1)
 
     const { data, error, count } = await query
 
@@ -97,10 +122,13 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({
-      listings: data,
-      count,
-      limit,
-      offset
+      listings: data || [],
+      pagination: {
+        page,
+        pageSize,
+        total: count || 0,
+        totalPages: Math.ceil((count || 0) / pageSize)
+      }
     })
   } catch (error) {
     console.error('Unexpected error:', error)
@@ -111,68 +139,42 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// POST /api/marketplace/listings - Create new listing
+// POST /api/marketplace/listings - Create new listing (auth required)
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
+    const supabase = createAuthClient()
+    const user = await requireAuth(supabase)
 
-    // Validate required fields
-    const requiredFields = [
-      'seller_id',
-      'county',
-      'state',
-      'property_address',
-      'parcel_id',
-      'assessed_value',
-      'original_purchase_price',
-      'original_purchase_date',
-      'current_value',
-      'asking_price',
-      'interest_rate',
-      'redemption_deadline'
-    ]
+    const body: CreateListingRequest = await request.json()
 
-    for (const field of requiredFields) {
-      if (!body[field]) {
-        return NextResponse.json(
-          { error: `Missing required field: ${field}` },
-          { status: 400 }
-        )
-      }
+    // Validate request
+    const validation = validateCreateListing(body)
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: 'Validation failed', errors: validation.errors },
+        { status: 400 }
+      )
     }
 
-    // Calculate days held
-    const purchaseDate = new Date(body.original_purchase_date)
-    const today = new Date()
-    const daysHeld = Math.floor((today.getTime() - purchaseDate.getTime()) / (1000 * 60 * 60 * 24))
-
     // Prepare listing data
-    const listingData: Partial<MarketplaceListing> = {
-      seller_id: body.seller_id,
-      seller_name: body.seller_name,
-      seller_rating: body.seller_rating,
-      opportunity_id: body.opportunity_id,
+    const listingData = {
+      seller_id: user.id,
+      title: body.title,
+      listing_type: body.listing_type,
+      property_address: body.property_address,
+      parcel_apn: body.parcel_apn,
       county: body.county,
       state: body.state,
-      property_address: body.property_address,
-      parcel_id: body.parcel_id,
-      property_type: body.property_type || 'Residential',
-      assessed_value: parseFloat(body.assessed_value),
-      original_purchase_price: parseFloat(body.original_purchase_price),
-      original_purchase_date: body.original_purchase_date,
-      current_value: parseFloat(body.current_value),
-      asking_price: parseFloat(body.asking_price),
-      interest_rate: parseFloat(body.interest_rate),
-      days_held: daysHeld,
-      redemption_deadline: body.redemption_deadline,
-      status: 'active',
-      listing_type: body.listing_type || 'fixed_price',
-      featured: body.featured || false,
-      description: body.description,
-      auction_start_date: body.auction_start_date,
-      auction_end_date: body.auction_end_date,
-      starting_bid: body.starting_bid ? parseFloat(body.starting_bid) : null,
-      reserve_price: body.reserve_price ? parseFloat(body.reserve_price) : null,
+      auction_name: body.auction_name || null,
+      auction_date_time: body.auction_date_time || null,
+      redemption_period: body.redemption_period || null,
+      starting_bid: body.starting_bid || null,
+      buy_now_price: body.buy_now_price || null,
+      estimated_value: body.estimated_value || null,
+      notes: body.notes || null,
+      source: body.source || null,
+      source_metadata: body.source_metadata || {},
+      status: 'draft' as const,
     }
 
     const { data, error } = await supabase
@@ -190,7 +192,14 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(data, { status: 201 })
-  } catch (error) {
+  } catch (error: any) {
+    if (error.message === 'Authentication required') {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
     console.error('Unexpected error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },

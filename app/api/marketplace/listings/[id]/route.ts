@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { createServiceClient, createAuthClient, requireAuth } from '@/lib/marketplace/api'
+import { validateUpdateListing } from '@/lib/marketplace/validation'
+import type { UpdateListingRequest } from '@/lib/marketplace/types'
 
 // GET /api/marketplace/listings/[id] - Get single listing
 export async function GET(
@@ -8,15 +10,7 @@ export async function GET(
 ) {
   try {
     const { id } = params
-
-    // Increment views count
-    await supabase.rpc('increment', {
-      table_name: 'marketplace_listings',
-      row_id: id,
-      column_name: 'views_count'
-    }).catch(() => {
-      // Ignore errors for view increment
-    })
+    const supabase = createServiceClient()
 
     const { data, error } = await supabase
       .from('marketplace_listings')
@@ -48,43 +42,65 @@ export async function GET(
   }
 }
 
-// PUT /api/marketplace/listings/[id] - Update listing
-export async function PUT(
+// PATCH /api/marketplace/listings/[id] - Update listing (auth required)
+export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const { id } = params
-    const body = await request.json()
+    const supabase = createAuthClient()
+    const user = await requireAuth(supabase)
 
-    // Remove fields that shouldn't be updated
-    const {
-      id: _id,
-      seller_id,
-      created_at,
-      updated_at,
-      sold_at,
-      views_count,
-      saves_count,
-      bid_count,
-      current_bid,
-      ...updateData
-    } = body
+    const body: UpdateListingRequest = await request.json()
 
+    // Validate request
+    const validation = validateUpdateListing(body)
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: 'Validation failed', errors: validation.errors },
+        { status: 400 }
+      )
+    }
+
+    // Check ownership
+    const { data: existing } = await supabase
+      .from('marketplace_listings')
+      .select('seller_id, status')
+      .eq('id', id)
+      .single()
+
+    if (!existing) {
+      return NextResponse.json(
+        { error: 'Listing not found' },
+        { status: 404 }
+      )
+    }
+
+    if (existing.seller_id !== user.id) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 403 }
+      )
+    }
+
+    // Cannot update sold listings
+    if (existing.status === 'sold') {
+      return NextResponse.json(
+        { error: 'Cannot update sold listings' },
+        { status: 400 }
+      )
+    }
+
+    // Update listing
     const { data, error } = await supabase
       .from('marketplace_listings')
-      .update(updateData)
+      .update(body)
       .eq('id', id)
       .select()
       .single()
 
     if (error) {
-      if (error.code === 'PGRST116') {
-        return NextResponse.json(
-          { error: 'Listing not found' },
-          { status: 404 }
-        )
-      }
       console.error('Error updating listing:', error)
       return NextResponse.json(
         { error: 'Failed to update listing' },
@@ -93,7 +109,14 @@ export async function PUT(
     }
 
     return NextResponse.json(data)
-  } catch (error) {
+  } catch (error: any) {
+    if (error.message === 'Authentication required') {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
     console.error('Unexpected error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
@@ -102,22 +125,39 @@ export async function PUT(
   }
 }
 
-// DELETE /api/marketplace/listings/[id] - Delete listing
+// DELETE /api/marketplace/listings/[id] - Delete listing (auth required)
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
     const { id } = params
+    const supabase = createAuthClient()
+    const user = await requireAuth(supabase)
 
-    // Check if listing can be deleted (not sold)
-    const { data: listing } = await supabase
+    // Check ownership and status
+    const { data: existing } = await supabase
       .from('marketplace_listings')
-      .select('status')
+      .select('seller_id, status')
       .eq('id', id)
       .single()
 
-    if (listing?.status === 'sold') {
+    if (!existing) {
+      return NextResponse.json(
+        { error: 'Listing not found' },
+        { status: 404 }
+      )
+    }
+
+    if (existing.seller_id !== user.id) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 403 }
+      )
+    }
+
+    // Cannot delete sold listings
+    if (existing.status === 'sold') {
       return NextResponse.json(
         { error: 'Cannot delete sold listings' },
         { status: 400 }
@@ -138,7 +178,14 @@ export async function DELETE(
     }
 
     return NextResponse.json({ success: true })
-  } catch (error) {
+  } catch (error: any) {
+    if (error.message === 'Authentication required') {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      )
+    }
+
     console.error('Unexpected error:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
