@@ -130,3 +130,99 @@ export type Badge = {
   criteria: any
   created_at: string
 }
+
+// Marketplace types
+export type MarketplaceListing = {
+  id: string
+  seller_id: string
+  seller_name: string | null
+  seller_rating: number | null
+  opportunity_id: string | null
+  county: string
+  state: string
+  property_address: string
+  parcel_id: string
+  property_type: string | null
+  assessed_value: number
+  original_purchase_price: number
+  original_purchase_date: string
+  current_value: number
+  asking_price: number
+  interest_rate: number
+  days_held: number
+  redemption_deadline: string
+  status: 'active' | 'pending' | 'sold' | 'cancelled' | 'expired'
+  listing_type: 'fixed_price' | 'auction' | 'best_offer'
+  featured: boolean
+  description: string | null
+  auction_start_date: string | null
+  auction_end_date: string | null
+  starting_bid: number | null
+  reserve_price: number | null
+  current_bid: number | null
+  bid_count: number
+  views_count: number
+  saves_count: number
+  created_at: string
+  updated_at: string
+  sold_at: string | null
+}
+
+export type MarketplaceBid = {
+  id: string
+  listing_id: string
+  bidder_id: string
+  bid_amount: number
+  status: 'active' | 'outbid' | 'won' | 'cancelled'
+  auto_bid_enabled: boolean
+  max_auto_bid: number | null
+  created_at: string
+  updated_at: string
+}
+
+export type MarketplacePurchase = {
+  id: string
+  listing_id: string
+  seller_id: string
+  buyer_id: string
+  winning_bid_id: string | null
+  purchase_price: number
+  marketplace_fee: number
+  seller_payout: number
+  payment_status: 'pending' | 'processing' | 'paid' | 'failed' | 'refunded'
+  payment_intent_id: string | null
+  assignment_status: 'pending' | 'in_progress' | 'completed' | 'failed'
+  assignment_filed_date: string | null
+  assignment_completed_date: string | null
+  county_confirmation_number: string | null
+  assignment_document_url: string | null
+  purchase_receipt_url: string | null
+  purchased_at: string
+  updated_at: string
+  completed_at: string | null
+}
+
+export type MarketplaceTransaction = {
+  id: string
+  user_id: string | null
+  listing_id: string | null
+  bid_id: string | null
+  purchase_id: string | null
+  transaction_type: string
+  description: string
+  amount: number | null
+  metadata: any | null
+  ip_address: string | null
+  user_agent: string | null
+  created_at: string
+}
+
+export type MarketplaceSaved = {
+  id: string
+  user_id: string
+  listing_id: string
+  notify_on_price_change: boolean
+  notify_on_bid: boolean
+  notify_before_expiration: boolean
+  created_at: string
+}
