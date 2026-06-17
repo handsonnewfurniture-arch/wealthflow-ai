@@ -221,6 +221,111 @@ When answering questions about mindset, motivation, or overcoming fear:
 - Always ground advice in BOTH philosophy (Hill) and practical action (Thomas)
 `
 
+// Mastery principles - deep learning over quick wins
+const MASTERY_PRINCIPLES = `
+PRIORITY: MASTERY OVER SPEED
+
+You must emphasize DEPTH over breadth, QUALITY over quantity, MASTERY over shortcuts.
+
+CORE MASTERY PHILOSOPHY:
+
+1. THE 10,000 HOUR PRINCIPLE:
+   - True expertise requires deep, deliberate practice
+   - Malcolm Gladwell: Every master put in 10,000+ hours
+   - Application: Don't rush to "flip" liens - master the fundamentals first
+   - Year 1 goal: LEARN the system deeply, not make maximum profit
+
+2. FOCUSED MASTERY (Robert Greene):
+   - Master ONE thing deeply before expanding
+   - Apprenticeship → Creative-Active → Mastery
+   - Application: Master ONE county thoroughly before expanding to others
+   - Know its auctions, redemption rates, neighborhoods, legal procedures inside-out
+
+3. DELIBERATE PRACTICE:
+   - Practice doesn't make perfect - PERFECT practice makes perfect
+   - Get feedback, analyze mistakes, refine approach
+   - Application: After each auction (even as observer), write down what you learned
+   - Review Ted's 16-Point Checklist - did you skip ANY steps?
+
+4. DEEP WORK (Cal Newport):
+   - Shallow work = busy but unproductive (scrolling listings)
+   - Deep work = focused, cognitively demanding (thorough due diligence)
+   - Application: Block 4-hour windows for DEEP property research
+   - No distractions, no multitasking - just YOU and the 16-Point Checklist
+
+5. KAIZEN - Continuous Improvement:
+   - 1% better every day = 37x better in a year
+   - Never stop learning, even after success
+   - Application: After EVERY lien purchase, ask:
+     * What did I do well?
+     * What could I improve?
+     * What did I learn?
+
+6. THE CRAFTSMAN MINDSET:
+   - Don't ask "What can tax liens do for me?"
+   - Ask "What can I offer to tax lien investing?"
+   - Become SO GOOD they can't ignore you
+   - Application: Be the investor with the BEST due diligence
+   - Be known for NEVER making careless mistakes
+
+7. QUALITY OVER QUANTITY:
+   - One perfectly researched lien > Ten rushed liens
+   - Warren Buffett: "It's better to buy a wonderful company at a fair price than a fair company at a wonderful price"
+   - Application: Don't bid on 10 liens at an auction
+   - Bid on the ONE you researched for 40+ hours
+
+8. MASTERY MILESTONES FOR TAX LIENS:
+
+   APPRENTICE PHASE (Months 1-6):
+   - Complete ALL 10 Academy lessons (not just skim - MASTER them)
+   - Attend 5+ auctions as OBSERVER (take detailed notes)
+   - Research 50+ properties using 16-Point Checklist (don't bid yet!)
+   - Read Ted Thomas's book 3 times
+   - Join investor communities, ask questions, LISTEN
+
+   JOURNEYMAN PHASE (Months 7-18):
+   - Purchase first 3-5 liens (small, conservative)
+   - Track redemption rates in your county
+   - Build relationships with county treasurers
+   - Develop your own property evaluation spreadsheet
+   - Learn from every mistake (and you WILL make mistakes)
+
+   MASTER PHASE (Months 19+):
+   - Consistent quarterly purchases (Capital Velocity)
+   - Can evaluate a property in 30 minutes (because you've done it 500 times)
+   - Trusted by other investors (Master Mind group)
+   - Teaching others what you've learned
+   - Portfolio generating passive income
+
+9. RED FLAGS OF RUSHING (WARN USERS):
+   - "I want to buy my first lien this week" → SLOW DOWN
+   - "I'll just bid on 5 liens and see what happens" → ONE, researched deeply
+   - "Due diligence takes too long" → That's the POINT
+   - "I'll learn as I go" → No, you'll LOSE money as you go
+   - Comparing yourself to others → Master YOUR journey
+
+10. MASTERY AFFIRMATIONS:
+    - "I am committed to MASTERY, not just money"
+    - "Every hour of study is an investment in expertise"
+    - "I will not rush - I will do this RIGHT"
+    - "Quality beats quantity every time"
+    - "I am building EXPERTISE that will serve me for decades"
+
+WHEN USERS ASK FOR SHORTCUTS:
+- Gently redirect to mastery path
+- Explain WHY shortcuts lead to losses
+- Share Ted's stories of investors who rushed and failed
+- Emphasize: The PROCESS is the progress
+- Remind: Hill said "Specialized knowledge" - that takes TIME
+
+WHEN USERS FEEL IMPATIENT:
+- Validate the feeling: "I understand you're eager to start earning!"
+- Reframe: "But the REAL wealth comes from becoming a MASTER investor"
+- Provide milestone: "Complete the first 3 Academy lessons THIS week"
+- Show progress: "You've attended 2 auctions - 3 more and you'll have pattern recognition"
+- Encourage: "You're building a skill that will generate income for LIFE"
+`
+
 export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json()
@@ -288,6 +393,18 @@ export async function POST(request: NextRequest) {
     // Persistence & failure
     else if (lastMessage.includes('give up') || lastMessage.includes('quit') || lastMessage.includes('failed') || lastMessage.includes('lost')) {
       response = "Napoleon Hill said: **'Most people quit right before success!'**\n\n**The Power of PERSISTENCE:**\n- Thomas Edison failed 10,000 times before inventing the lightbulb\n- Every 'no' at an auction is one step closer to 'yes'\n- Your ability to persist is the measure of your FAITH\n\n**Ted Thomas's advice:**\n- Attend 3-5 auctions as an OBSERVER before bidding\n- Your first lien won't be perfect - that's okay!\n- If a lien doesn't pass the 16-Point Checklist, move to the next one\n- Build a PIPELINE of 20+ researched properties\n\n**What to do when you face setbacks:**\n\n1. 🔄 **Reframe it** - You didn't fail, you learned what NOT to do\n2. 📊 **Analyze** - What went wrong? Improve your process\n3. 🎓 **Educate** - Review Academy lessons, watch Ted's videos\n4. 🤝 **Mastermind** - Ask experienced investors on the Marketplace\n5. 🔥 **Recommit** - Review your written goal, rekindle your DESIRE\n\n**Hill's Formula for Persistence:**\nWeak desires → Weak results\nBURNING desires → Unstoppable persistence → SUCCESS\n\nYou haven't failed. You're in the middle of your success story. Keep going!"
+    }
+    // Fast money / shortcuts
+    else if (lastMessage.includes('fast') || lastMessage.includes('quick') || lastMessage.includes('shortcut') || lastMessage.includes('easy money')) {
+      response = "⚠️ **IMPORTANT: There are NO shortcuts to mastery!**\n\nI understand you're eager to start earning, but rushing is the #1 way investors LOSE money in tax liens.\n\n**The Truth:**\n- Tax liens CAN generate 12-36% returns\n- But ONLY if you master Ted's 16-Point Checklist\n- Shortcuts = Buying junk properties = Losing your investment\n\n**The Mastery Path (6-12 months):**\n\n📚 **Months 1-3: LEARN**\n- Complete all 10 Academy lessons\n- Study Ted Thomas's strategies\n- Read about successful investors\n\n🔍 **Months 4-6: OBSERVE**\n- Attend 5+ county auctions (don't bid!)\n- Research 50+ properties for practice\n- Learn auction dynamics\n\n💰 **Months 7-12: EXECUTE**\n- Buy your first lien (small, conservative)\n- ONE perfect lien > Ten rushed liens\n- Track results, refine process\n\n**Why This Timeline?**\n- Mastery requires 10,000 hours of deliberate practice\n- You're building a skill that will earn for DECADES\n- Ted himself spent YEARS learning before scaling\n\n**The Shortcut Paradox:**\nRushing to buy your first lien in Week 1 = Learning for months after losing money\nTaking 6 months to learn properly = Earning for YEARS\n\nWhich path do you choose? 🎯"
+    }
+    // Mastery & learning
+    else if (lastMessage.includes('master') || lastMessage.includes('expert') || lastMessage.includes('learn') && !lastMessage.includes('where')) {
+      response = "🎓 **MASTERY is the path to true wealth!**\n\nRobert Greene: 'Mastery is not a function of genius or talent. It's a function of time and intense focus applied to a particular field.'\n\n**Your Mastery Journey:**\n\n**Phase 1: APPRENTICE (Months 1-6)**\n✅ Complete ALL 10 Academy lessons (don't just skim - MASTER them)\n✅ Attend 5+ auctions as observer\n✅ Research 50+ properties using the 16-Point Checklist\n✅ Join investor communities\n✅ Read Ted Thomas's materials 3 times\n\n**Phase 2: JOURNEYMAN (Months 7-18)**\n✅ Purchase first 3-5 liens (small, conservative)\n✅ Track every metric (redemption rates, ROI, time invested)\n✅ Build relationships with county officials\n✅ Learn from EVERY mistake\n✅ Develop your own evaluation system\n\n**Phase 3: MASTER (Months 19+)**\n✅ Consistent quarterly purchases\n✅ Can evaluate properties quickly (pattern recognition)\n✅ Teaching others\n✅ Passive income flowing\n✅ Master Mind group leader\n\n**Mastery Principles:**\n- DEEP WORK: 4-hour focused sessions on due diligence\n- DELIBERATE PRACTICE: Analyze what went right/wrong\n- KAIZEN: 1% better every day = 37x better in a year\n- QUALITY > QUANTITY: One perfect lien beats ten mediocre ones\n\n**Start today:** Complete Academy Lesson 1 with FULL attention. Take notes. Master it before moving to Lesson 2.\n\nMastery isn't fast. But it's FOREVER. 🏆"
+    }
+    // Timeline / how long
+    else if (lastMessage.includes('how long') || lastMessage.includes('timeline') || lastMessage.includes('when can i')) {
+      response = "⏰ **Realistic Timeline for Tax Lien Success:**\n\n**Months 1-3: FOUNDATION**\n- Academy education: 15-20 hours\n- Reading/research: 30-40 hours\n- Auction observation: 5-10 hours\n- Total: ~60 hours invested\n- Earnings: $0 (you're LEARNING)\n\n**Months 4-6: PREPARATION**\n- More auction observation: 10-15 hours\n- Property research practice: 40-50 hours\n- Networking with investors: 10 hours\n- Total: ~120 hours invested\n- Earnings: Still $0 (building EXPERTISE)\n\n**Months 7-12: FIRST INVESTMENTS**\n- First lien purchase: 1-3 liens\n- Deep due diligence per lien: 20-40 hours each\n- Waiting for redemption: 6-24 months\n- Potential earnings: 12-36% on invested capital\n\n**Year 2+: SCALING**\n- Quarterly purchases (Capital Velocity)\n- Pattern recognition developed\n- Faster property evaluation\n- Portfolio compounding\n\n**The Truth:**\n- First PROFIT: 12-24 months (when liens redeem)\n- Mastery: 2-3 years\n- Significant income: 3-5 years\n\n**This is NOT get-rich-quick!**\nThis is BUILD WEALTH RIGHT.\n\nTed Thomas built his fortune over DECADES, not weeks.\nNapoleon Hill studied millionaires for 20 YEARS.\n\n**The question isn't 'how long?' - it's 'am I willing to become a MASTER?'**\n\nReady to start the journey?"
     }
     // Default case - general help
     else {
