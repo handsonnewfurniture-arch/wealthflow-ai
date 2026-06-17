@@ -521,6 +521,7 @@ export default function HomePage() {
               <ul className="space-y-2">
                 <li><Link href="/marketplace" className="text-cream-400 hover:text-cream-200 text-sm transition-colors">Marketplace</Link></li>
                 <li><Link href="/academy" className="text-cream-400 hover:text-cream-200 text-sm transition-colors">Education</Link></li>
+                <li><Link href="/blog" className="text-cream-400 hover:text-cream-200 text-sm transition-colors">Blog</Link></li>
                 <li><Link href="/portfolio" className="text-cream-400 hover:text-cream-200 text-sm transition-colors">Portfolio</Link></li>
                 <li><Link href="/pricing" className="text-cream-400 hover:text-cream-200 text-sm transition-colors">Pricing</Link></li>
               </ul>

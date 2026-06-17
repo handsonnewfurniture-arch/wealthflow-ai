@@ -40,6 +40,9 @@ export default function Navbar() {
             <Link href="/academy" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Academy
             </Link>
+            <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              Blog
+            </Link>
             <Link href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Pricing
             </Link>
@@ -140,6 +143,13 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Academy
+            </Link>
+            <Link
+              href="/blog"
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Blog
             </Link>
             <Link
               href="/pricing"

@@ -6,6 +6,7 @@
 'use client'
 
 import { useState } from 'react'
+import Navbar from '@/components/Navbar'
 import FeaturedHero from '@/components/blog/FeaturedHero'
 import CategoryPills from '@/components/blog/CategoryPills'
 import ArticleCard, { Article } from '@/components/blog/ArticleCard'
@@ -143,8 +144,12 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#f9f9f9]">
+      <Navbar />
+
       {/* Featured Hero */}
-      <FeaturedHero />
+      <div className="pt-16">
+        <FeaturedHero />
+      </div>
 
       {/* Category Pills */}
       <CategoryPills onCategoryChange={handleCategoryChange} />
