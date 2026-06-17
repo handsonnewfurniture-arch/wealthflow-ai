@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API Test</title>
+</head>
+<body>
+  <h1>Testing API Connection</h1>
+  <div id="result">Loading...</div>
+
+  <script>
+    console.log('Script loaded')
+
+    fetch('/api/marketplace/listings?status=active&limit=1')
+      .then(res => {
+        console.log('Response:', res.status)
+        return res.json()
+      })
+      .then(data => {
+        console.log('Data:', data)
+        document.getElementById('result').innerHTML =
+          '<pre>' + JSON.stringify(data, null, 2) + '</pre>'
+      })
+      .catch(err => {
+        console.error('Error:', err)
+        document.getElementById('result').innerHTML =
+          '<p style="color:red">Error: ' + err.message + '</p>'
+      })
+  </script>
+</body>
+</html>
