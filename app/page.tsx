@@ -16,9 +16,9 @@ export default function HomePage() {
               <span className="text-2xl font-bold text-white">WealthFlow AI</span>
             </div>
             <div className="flex items-center space-x-4">
-              <a href="/pricing" className="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold transition">
+              <Link href="/pricing" className="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold transition">
                 Get Started
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -38,12 +38,12 @@ export default function HomePage() {
             analyze counties, discover undervalued properties, and build a portfolio that compounds year after year.
           </p>
           <div className="flex gap-4 justify-center">
-            <a href="/pricing" className="px-8 py-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold text-lg transition transform hover:scale-105">
+            <Link href="/pricing" className="px-8 py-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold text-lg transition transform hover:scale-105">
               Start Free Trial
-            </a>
-            <a href="/counties" className="px-8 py-4 bg-white/10 text-white border-2 border-white/30 rounded-lg hover:bg-white/20 font-bold text-lg transition">
+            </Link>
+            <Link href="/counties" className="px-8 py-4 bg-white/10 text-white border-2 border-white/30 rounded-lg hover:bg-white/20 font-bold text-lg transition">
               Explore Counties
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -93,9 +93,9 @@ export default function HomePage() {
         <div className="mt-24 text-center bg-gradient-to-r from-emerald-600/20 to-blue-600/20 border border-emerald-500/30 rounded-2xl p-12">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Investing?</h2>
           <p className="text-xl text-gray-300 mb-8">Join investors building wealth through tax liens</p>
-          <a href="/pricing" className="inline-block px-10 py-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold text-lg transition transform hover:scale-105">
+          <Link href="/pricing" className="inline-block px-10 py-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold text-lg transition transform hover:scale-105">
             View Pricing Plans
-          </a>
+          </Link>
           <p className="text-gray-400 mt-4">Plans starting at $29/month • 7-day free trial • Cancel anytime</p>
         </div>
       </div>

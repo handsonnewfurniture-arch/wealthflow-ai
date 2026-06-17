@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import {
   Search,
   Filter,
@@ -442,9 +443,11 @@ export default function Counties() {
 
                     {/* Actions */}
                     <div className="lg:col-span-3 flex flex-col justify-between space-y-3">
-                      <Button variant="primary" size="sm" className="w-full">
-                        View Opportunities
-                      </Button>
+                      <Link href="/marketplace" className="w-full">
+                        <Button variant="primary" size="sm" className="w-full">
+                          View Opportunities
+                        </Button>
+                      </Link>
                       <a
                         href={county.auctionWebsite}
                         target="_blank"

@@ -5,12 +5,14 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Menu, X, User, LogOut, Settings } from 'lucide-react'
 import Button from './ui/Button'
-import { useAuth } from '@/lib/auth-context'
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const { user, signOut } = useAuth()
+
+  // Auth is temporarily disabled, so hardcode user as null
+  const user = null
+  const signOut = async () => {}
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm">
@@ -90,11 +92,11 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center space-x-3">
-                <Link href="/login">
-                  <Button variant="secondary" size="sm">Sign In</Button>
+                <Link href="/login" className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors">
+                  Sign In
                 </Link>
-                <Link href="/signup">
-                  <Button variant="primary" size="sm">Get Started</Button>
+                <Link href="/signup" className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors">
+                  Get Started
                 </Link>
               </div>
             )}
@@ -146,8 +148,12 @@ export default function Navbar() {
             >
               Pricing
             </Link>
-            <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="primary" className="w-full">Get Started</Button>
+            <Link
+              href="/signup"
+              className="block w-full px-4 py-3 text-center font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Get Started
             </Link>
           </div>
         </div>
