@@ -9,7 +9,55 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+      },
       colors: {
+        // Premium organic color palette
+        cream: {
+          50: '#fdfcfb',
+          100: '#faf8f5',
+          200: '#f5f1ea',
+          300: '#ede7dc',
+          400: '#e3d9ca',
+          500: '#d4c4ad', // Primary cream
+          600: '#bfa98a',
+          700: '#a08968',
+          800: '#7d6a4f',
+          900: '#5e503a',
+        },
+        beige: {
+          50: '#faf9f7',
+          100: '#f5f3ee',
+          200: '#ebe7dd',
+          300: '#ddd7c7',
+          400: '#cdc3ad',
+          500: '#b8aa8f', // Primary beige
+          600: '#9e8e74',
+          700: '#82705b',
+          800: '#665747',
+          900: '#4d4235',
+        },
+        forest: {
+          50: '#f4f7f5',
+          100: '#e5ebe7',
+          200: '#cad6ce',
+          300: '#a8bab0',
+          400: '#7f9988',
+          500: '#5d7a67',
+          600: '#476252', // Primary forest green
+          700: '#3a5042',
+          800: '#2f4036',
+          900: '#1f2b24', // Dark forest
+        },
+        // Neon accent colors for dark mode
+        neon: {
+          blue: '#00d4ff',
+          purple: '#a855f7',
+          pink: '#ec4899',
+          cyan: '#06b6d4',
+        },
         // Enterprise slate blue palette (Stripe-like)
         slate: {
           50: '#f8fafc',
@@ -87,6 +135,19 @@ const config: Config = {
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'bounce-slow': 'bounce 2s infinite',
+        'marquee': 'marquee 40s linear infinite',
+        'marquee-slow': 'marquee 60s linear infinite',
+        'marquee-fast': 'marquee 30s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       boxShadow: {
         'glass': '0 8px 32px 0 rgba(16, 42, 67, 0.37)',
