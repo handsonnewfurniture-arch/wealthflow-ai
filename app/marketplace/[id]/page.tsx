@@ -24,6 +24,8 @@ import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import MediaGallery from '@/components/MediaGallery'
+import FieldVerificationGallery from '@/components/FieldVerificationGallery'
+import FieldVerificationUploader from '@/components/FieldVerificationUploader'
 import type { MarketplaceListing } from '@/lib/marketplace/types'
 import { LEGAL_DISCLAIMER } from '@/lib/marketplace/constants'
 
@@ -258,6 +260,26 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
                 <h3 className="font-bold text-lg mb-4">Property Media</h3>
                 <MediaGallery listingId={params.id} />
               </Card>
+
+              {/* Field Verification - User-Generated Content */}
+              <div>
+                <h3 className="font-bold text-lg mb-4">Field Verification</h3>
+                <p className="text-sm text-gray-400 mb-4">
+                  Real photos & videos from the actual property location, verified by our community
+                </p>
+                <FieldVerificationGallery listingId={params.id} />
+              </div>
+
+              {/* Upload Your Own Field Verification */}
+              <div>
+                <FieldVerificationUploader
+                  listingId={params.id}
+                  onUploadComplete={() => {
+                    // Refresh the page to show new verification
+                    window.location.reload()
+                  }}
+                />
+              </div>
 
               {/* Key Details */}
               <Card className="p-6">

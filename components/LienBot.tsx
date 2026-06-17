@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { MessageCircle, X, Send, Sparkles, Lightbulb } from 'lucide-react'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -272,8 +273,14 @@ export default function LienBot() {
           <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center">
-                  <Sparkles className="w-6 h-6 text-orange-500" />
+                <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1 overflow-hidden">
+                  <Image
+                    src="/logo.png"
+                    alt="Hands On Tax Liens"
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-400 rounded-full border-2 border-orange-600"></div>
               </div>
