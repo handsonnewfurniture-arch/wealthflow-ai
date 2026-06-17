@@ -11,10 +11,6 @@ import Button from '@/components/ui/Button'
 export default function Academy() {
   const [selectedCategory, setSelectedCategory] = useState('all')
 
-  const handleStartLesson = (lessonTitle: string) => {
-    alert(`"${lessonTitle}" lesson is coming soon! This feature will be available once authentication is enabled.`)
-  }
-
   const categories = [
     { id: 'all', name: 'All Lessons', count: 10 },
     { id: 'basics', name: 'Basics', count: 4 },
@@ -293,29 +289,44 @@ export default function Academy() {
                     </div>
                   </div>
 
-                  <Button
-                    variant={lesson.completed ? 'secondary' : 'primary'}
-                    className="w-full"
-                    disabled={isLocked}
-                    onClick={() => !isLocked && handleStartLesson(lesson.title)}
-                  >
-                    {isLocked ? (
-                      <>
-                        <Lock className="w-4 h-4 mr-2" />
-                        Upgrade to Access
-                      </>
-                    ) : lesson.completed ? (
-                      <>
-                        <CheckCircle className="w-4 h-4 mr-2" />
-                        Review Lesson
-                      </>
-                    ) : (
-                      <>
-                        <Play className="w-4 h-4 mr-2" />
-                        Start Lesson
-                      </>
-                    )}
-                  </Button>
+                  {isLocked ? (
+                    <Button
+                      variant="secondary"
+                      className="w-full"
+                      disabled
+                    >
+                      <Lock className="w-4 h-4 mr-2" />
+                      Upgrade to Access
+                    </Button>
+                  ) : lesson.id <= 3 ? (
+                    <Link href={`/academy/lessons/${lesson.id}`} className="w-full">
+                      <Button
+                        variant={lesson.completed ? 'secondary' : 'primary'}
+                        className="w-full"
+                      >
+                        {lesson.completed ? (
+                          <>
+                            <CheckCircle className="w-4 h-4 mr-2" />
+                            Review Lesson
+                          </>
+                        ) : (
+                          <>
+                            <Play className="w-4 h-4 mr-2" />
+                            Start Lesson
+                          </>
+                        )}
+                      </Button>
+                    </Link>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      className="w-full"
+                      onClick={() => alert(`"${lesson.title}" lesson coming soon!`)}
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      Coming Soon
+                    </Button>
+                  )}
                 </Card>
               )
             })}
