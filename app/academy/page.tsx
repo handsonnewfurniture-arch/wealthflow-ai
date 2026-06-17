@@ -290,15 +290,16 @@ export default function Academy() {
                   </div>
 
                   {isLocked ? (
-                    <Button
-                      variant="secondary"
-                      className="w-full"
-                      disabled
-                    >
-                      <Lock className="w-4 h-4 mr-2" />
-                      Upgrade to Access
-                    </Button>
-                  ) : lesson.id <= 3 ? (
+                    <Link href="/pricing" className="w-full">
+                      <Button
+                        variant="secondary"
+                        className="w-full"
+                      >
+                        <Lock className="w-4 h-4 mr-2" />
+                        Upgrade to Access
+                      </Button>
+                    </Link>
+                  ) : (
                     <Link href={`/academy/lessons/${lesson.id}`} className="w-full">
                       <Button
                         variant={lesson.completed ? 'secondary' : 'primary'}
@@ -317,15 +318,6 @@ export default function Academy() {
                         )}
                       </Button>
                     </Link>
-                  ) : (
-                    <Button
-                      variant="primary"
-                      className="w-full"
-                      onClick={() => alert(`"${lesson.title}" lesson coming soon!`)}
-                    >
-                      <Play className="w-4 h-4 mr-2" />
-                      Coming Soon
-                    </Button>
                   )}
                 </Card>
               )
