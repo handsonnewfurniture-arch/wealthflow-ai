@@ -95,7 +95,7 @@ export default function Navbar() {
                 <Link href="/login" className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors">
                   Sign In
                 </Link>
-                <Link href="/signup" className="px-4 py-2 text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors">
+                <Link href="/signup" className="px-4 py-2 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors">
                   Get Started
                 </Link>
               </div>
@@ -150,7 +150,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/signup"
-              className="block w-full px-4 py-3 text-center font-medium text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors"
+              className="block w-full px-4 py-3 text-center font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               Get Started

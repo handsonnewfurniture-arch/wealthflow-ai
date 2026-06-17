@@ -23,6 +23,20 @@ const config: Config = {
           900: '#102a43',
           950: '#0a1929',
         },
+        // Primary CTA color - optimized for conversion
+        orange: {
+          50: '#fff7ed',
+          100: '#ffedd5',
+          200: '#fed7aa',
+          300: '#fdba74',
+          400: '#fb923c',
+          500: '#f97316', // Primary CTA
+          600: '#ea580c',
+          700: '#c2410c',
+          800: '#9a3412',
+          900: '#7c2d12',
+        },
+        // Success & growth indicators
         emerald: {
           50: '#ecfdf5',
           100: '#d1fae5',
@@ -35,6 +49,7 @@ const config: Config = {
           800: '#065f46',
           900: '#064e3b',
         },
+        // Premium features
         gold: {
           50: '#fefce8',
           100: '#fef9c3',

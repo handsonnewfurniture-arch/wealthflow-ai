@@ -8,7 +8,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 p-2 rounded-lg">
+              <div className="bg-gradient-to-br from-orange-500 to-orange-600 p-2 rounded-lg">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
@@ -16,7 +16,7 @@ export default function HomePage() {
               <span className="text-2xl font-bold text-white">WealthFlow AI</span>
             </div>
             <div className="flex items-center space-x-4">
-              <Link href="/pricing" className="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold transition">
+              <Link href="/pricing" className="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-bold transition">
                 Get Started
               </Link>
             </div>
@@ -29,7 +29,7 @@ export default function HomePage() {
         <div className="text-center mb-16">
           <h1 className="text-6xl font-bold text-white mb-6 leading-tight">
             Tax Lien Investment<br/>
-            <span className="bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-400 to-gold-400 bg-clip-text text-transparent">
               Intelligence Platform
             </span>
           </h1>
@@ -38,7 +38,7 @@ export default function HomePage() {
             analyze counties, discover undervalued properties, and build a portfolio that compounds year after year.
           </p>
           <div className="flex gap-4 justify-center">
-            <Link href="/pricing" className="px-8 py-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold text-lg transition transform hover:scale-105">
+            <Link href="/pricing" className="px-8 py-4 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-bold text-lg transition transform hover:scale-105">
               Start Free Trial
             </Link>
             <Link href="/counties" className="px-8 py-4 bg-white/10 text-white border-2 border-white/30 rounded-lg hover:bg-white/20 font-bold text-lg transition">
@@ -51,7 +51,7 @@ export default function HomePage() {
         <div className="grid md:grid-cols-3 gap-8 mt-20">
           {/* Feature 1 */}
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition">
-            <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6">
+            <div className="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mb-6">
               <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
               </svg>
@@ -90,10 +90,10 @@ export default function HomePage() {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-24 text-center bg-gradient-to-r from-emerald-600/20 to-blue-600/20 border border-emerald-500/30 rounded-2xl p-12">
+        <div className="mt-24 text-center bg-gradient-to-r from-orange-600/20 to-gold-600/20 border border-orange-500/30 rounded-2xl p-12">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Start Investing?</h2>
           <p className="text-xl text-gray-300 mb-8">Join investors building wealth through tax liens</p>
-          <Link href="/pricing" className="inline-block px-10 py-4 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold text-lg transition transform hover:scale-105">
+          <Link href="/pricing" className="inline-block px-10 py-4 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-bold text-lg transition transform hover:scale-105">
             View Pricing Plans
           </Link>
           <p className="text-gray-400 mt-4">Plans starting at $29/month • 7-day free trial • Cancel anytime</p>

@@ -29,7 +29,7 @@ export default function SignupPage() {
 
           <Link
             href="/"
-            className="flex items-center justify-center space-x-2 w-full px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-bold transition"
+            className="flex items-center justify-center space-x-2 w-full px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-bold transition"
           >
             <ArrowLeft className="w-5 h-5" />
             <span>Back to Home</span>
@@ -38,7 +38,7 @@ export default function SignupPage() {
           <div className="mt-6 text-center">
             <p className="text-gray-300">
               Already have an account?{' '}
-              <Link href="/login" className="text-emerald-400 hover:text-emerald-300 font-medium">
+              <Link href="/login" className="text-orange-400 hover:text-orange-300 font-medium">
                 Sign in
               </Link>
             </p>

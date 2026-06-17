@@ -23,6 +23,7 @@ import Navbar from '@/components/Navbar'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
+import MediaGallery from '@/components/MediaGallery'
 import type { MarketplaceListing } from '@/lib/marketplace/types'
 import { LEGAL_DISCLAIMER } from '@/lib/marketplace/constants'
 
@@ -250,6 +251,12 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
                   <h2 className="font-bold mb-2">{listing.property_address}</h2>
                   <p className="text-sm text-gray-400">Full property address as recorded in county records</p>
                 </div>
+              </Card>
+
+              {/* Property Media Gallery */}
+              <Card className="p-6">
+                <h3 className="font-bold text-lg mb-4">Property Media</h3>
+                <MediaGallery listingId={params.id} />
               </Card>
 
               {/* Key Details */}

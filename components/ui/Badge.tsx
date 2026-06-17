@@ -3,12 +3,13 @@ import clsx from 'clsx'
 
 interface BadgeProps {
   children: ReactNode
-  variant?: 'emerald' | 'gold' | 'red' | 'blue' | 'gray'
+  variant?: 'orange' | 'emerald' | 'gold' | 'red' | 'blue' | 'gray'
   className?: string
 }
 
 export default function Badge({ children, variant = 'emerald', className }: BadgeProps) {
   const variants = {
+    orange: 'badge-orange',
     emerald: 'badge-emerald',
     gold: 'badge-gold',
     red: 'badge-red',

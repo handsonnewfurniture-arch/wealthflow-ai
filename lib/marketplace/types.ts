@@ -21,6 +21,7 @@ export interface MarketplaceListing {
   buy_now_price: number | null
   estimated_value: number | null
   status: ListingStatus
+  is_premium: boolean
   notes: string | null
   legal_disclaimer: string
   source: string | null
@@ -122,6 +123,7 @@ export interface CreateListingRequest {
 
 export interface UpdateListingRequest extends Partial<CreateListingRequest> {
   status?: ListingStatus
+  is_premium?: boolean
 }
 
 export interface ListingFilters {
