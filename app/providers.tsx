@@ -1,7 +1,9 @@
 'use client'
 
-import { AuthProvider } from '@/lib/auth-context'
+// import { AuthProvider } from '@/lib/auth-context'
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>
+  // Temporarily disabled AuthProvider for debugging
+  // return <AuthProvider>{children}</AuthProvider>
+  return <>{children}</>
 }
