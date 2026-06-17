@@ -127,21 +127,32 @@ export default function Pricing() {
     <div className="min-h-screen bg-navy-950">
       <Navbar />
 
-      <div className="pt-20 px-4 pb-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="page-header mb-4">Simple, Transparent Pricing</h1>
-            <p className="text-xl text-gray-300 mb-8">
-              Choose the plan that fits your investment goals
+      {/* Modern Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pt-32 pb-16">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 mb-8">
+              <span className="text-sm font-semibold text-orange-400">14-Day Free Trial</span>
+            </div>
+
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
+              Simple, <span className="gradient-text">Transparent</span> Pricing
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
+              Choose the plan that fits your investment goals. No hidden fees, cancel anytime.
             </p>
 
-            {/* Billing Toggle */}
-            <div className="inline-flex items-center bg-navy-900/50 border border-white/10 rounded-xl p-1">
+            {/* Modern Billing Toggle */}
+            <div className="inline-flex items-center bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-2">
               <button
-                className={`px-6 py-2 rounded-lg transition-all ${
+                className={`px-8 py-4 rounded-xl transition-all duration-300 font-semibold ${
                   billingCycle === 'monthly'
-                    ? 'bg-emerald-500 text-white'
+                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
                     : 'text-gray-400 hover:text-white'
                 }`}
                 onClick={() => setBillingCycle('monthly')}
@@ -149,9 +160,9 @@ export default function Pricing() {
                 Monthly
               </button>
               <button
-                className={`px-6 py-2 rounded-lg transition-all ${
+                className={`px-8 py-4 rounded-xl transition-all duration-300 font-semibold ${
                   billingCycle === 'annual'
-                    ? 'bg-emerald-500 text-white'
+                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
                     : 'text-gray-400 hover:text-white'
                 }`}
                 onClick={() => setBillingCycle('annual')}
@@ -163,6 +174,11 @@ export default function Pricing() {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Pricing Cards Section */}
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
 
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">

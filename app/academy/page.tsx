@@ -159,89 +159,104 @@ export default function Academy() {
     <div className="min-h-screen bg-navy-950">
       <Navbar />
 
-      <div className="pt-20 px-4 pb-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <h1 className="page-header mb-4">Wealth Academy</h1>
-            <p className="text-xl text-gray-300">
+      {/* Modern Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-1/3 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pt-32 pb-16">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-500/10 border border-gold-500/20 mb-8">
+              <Award className="w-4 h-4 text-gold-400" />
+              <span className="text-sm font-semibold text-gold-400">Learn & Earn XP</span>
+            </div>
+
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight leading-[1.1]">
+              Wealth <span className="gradient-text">Academy</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
               Master tax lien investing from basics to advanced strategies. Earn XP and unlock badges.
             </p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <Card className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-emerald-500/20 p-2 rounded-lg">
-                  <BookOpen className="w-5 h-5 text-emerald-400" />
+          {/* Modern Stats Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center space-x-4">
+                <div className="bg-emerald-500/20 p-3 rounded-xl shadow-lg shadow-emerald-500/10">
+                  <BookOpen className="w-6 h-6 text-emerald-400" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">2/10</div>
-                  <div className="text-xs text-gray-400">Lessons Complete</div>
+                  <div className="text-3xl font-bold">2/10</div>
+                  <div className="text-sm text-gray-400">Lessons Complete</div>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-gold-500/20 p-2 rounded-lg">
-                  <Award className="w-5 h-5 text-gold-400" />
+            <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-gold-500/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center space-x-4">
+                <div className="bg-gold-500/20 p-3 rounded-xl shadow-lg shadow-gold-500/10">
+                  <Award className="w-6 h-6 text-gold-400" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">100 XP</div>
-                  <div className="text-xs text-gray-400">Earned from Academy</div>
+                  <div className="text-3xl font-bold">100 XP</div>
+                  <div className="text-sm text-gray-400">Total XP Earned</div>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-emerald-500/20 p-2 rounded-lg">
-                  <Clock className="w-5 h-5 text-emerald-400" />
+            <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-emerald-500/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center space-x-4">
+                <div className="bg-emerald-500/20 p-3 rounded-xl shadow-lg shadow-emerald-500/10">
+                  <Clock className="w-6 h-6 text-emerald-400" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">22 min</div>
-                  <div className="text-xs text-gray-400">Total Learning Time</div>
+                  <div className="text-3xl font-bold">22 min</div>
+                  <div className="text-sm text-gray-400">Learning Time</div>
                 </div>
               </div>
-            </Card>
+            </div>
 
-            <Card className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="bg-gold-500/20 p-2 rounded-lg">
-                  <TrendingUp className="w-5 h-5 text-gold-400" />
+            <div className="group bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-gold-500/30 transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center space-x-4">
+                <div className="bg-gold-500/20 p-3 rounded-xl shadow-lg shadow-gold-500/10">
+                  <TrendingUp className="w-6 h-6 text-gold-400" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold">20%</div>
-                  <div className="text-xs text-gray-400">Progress</div>
+                  <div className="text-3xl font-bold">20%</div>
+                  <div className="text-sm text-gray-400">Progress</div>
                 </div>
               </div>
-            </Card>
+            </div>
           </div>
+        </div>
+      </div>
 
-          {/* Category Filters */}
-          <div className="flex items-center space-x-3 mb-8 overflow-x-auto pb-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition-all ${
-                  selectedCategory === category.id
-                    ? 'bg-emerald-500 text-white'
-                    : 'glass-card text-gray-400 hover:text-white'
-                }`}
-              >
-                {category.name}
-                <Badge variant="gray" className="ml-2 text-xs">
-                  {category.count}
-                </Badge>
-              </button>
-            ))}
-          </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
+        {/* Category Filters */}
+        <div className="flex items-center space-x-3 mb-12 overflow-x-auto pb-2">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`px-6 py-3 rounded-2xl whitespace-nowrap transition-all duration-300 font-semibold ${
+                selectedCategory === category.id
+                  ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/30'
+                  : 'bg-white/5 backdrop-blur-xl border border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+              }`}
+            >
+              {category.name}
+              <Badge variant="gray" className="ml-2 text-xs">
+                {category.count}
+              </Badge>
+            </button>
+          ))}
+        </div>
 
-          {/* Lessons Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {/* Lessons Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {filteredLessons.map((lesson) => {
               const hasAccess = canAccessLesson(lesson.tierRequired)
               const isLocked = !hasAccess
