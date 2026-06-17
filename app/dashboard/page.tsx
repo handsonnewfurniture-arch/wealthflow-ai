@@ -286,10 +286,12 @@ export default function Dashboard() {
                           <Badge variant="emerald">Low Crime</Badge>
                           <Badge variant="blue">Owner Occupied</Badge>
                         </div>
-                        <Button variant="secondary" size="sm">
-                          View Details
-                          <ChevronRight className="w-4 h-4 ml-1 inline" />
-                        </Button>
+                        <Link href={`/counties/${opp.state}`}>
+                          <Button variant="secondary" size="sm">
+                            View Details
+                            <ChevronRight className="w-4 h-4 ml-1 inline" />
+                          </Button>
+                        </Link>
                       </div>
                     </Card>
                   ))}
@@ -392,9 +394,9 @@ export default function Dashboard() {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-4 text-sm text-emerald-400 hover:text-emerald-300 transition-colors">
+                <Link href="/counties" className="w-full mt-4 text-sm text-emerald-400 hover:text-emerald-300 transition-colors block text-center">
                   View All
-                </button>
+                </Link>
               </Card>
 
               {/* Recent Badges */}
@@ -431,9 +433,11 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <Button variant="primary" size="sm" className="w-full">
-                  Find Opportunities
-                </Button>
+                <Link href="/counties">
+                  <Button variant="primary" size="sm" className="w-full">
+                    Find Opportunities
+                  </Button>
+                </Link>
               </Card>
 
               {/* Subscription Status */}
@@ -445,10 +449,8 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-400 mb-4">
                   Full access to investor scores, county rankings, and portfolio tracking.
                 </p>
-                <Link href="/pricing">
-                  <button className="text-sm text-gold-400 hover:text-gold-300 transition-colors">
-                    Upgrade to Elite →
-                  </button>
+                <Link href="/pricing" className="text-sm text-gold-400 hover:text-gold-300 transition-colors">
+                  Upgrade to Elite →
                 </Link>
               </Card>
             </div>

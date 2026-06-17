@@ -320,14 +320,16 @@ export default function Marketplace() {
               List your investments on the marketplace and get instant liquidity. No waiting for redemption.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-              <Button variant="primary" size="lg">
-                <Link href="/marketplace/seller/listings/new">
+              <Link href="/marketplace/seller/listings/new">
+                <Button variant="primary" size="lg">
                   List Your Investments
-                </Link>
-              </Button>
-              <Button variant="secondary" size="lg">
-                Learn More
-              </Button>
+                </Button>
+              </Link>
+              <Link href="/academy">
+                <Button variant="secondary" size="lg">
+                  Learn More
+                </Button>
+              </Link>
             </div>
             <p className="text-xs text-gray-500 mt-4">
               5% marketplace fee · Instant payments · Legal assignment handled

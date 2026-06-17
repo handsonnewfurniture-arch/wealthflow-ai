@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import {
   DollarSign,
   TrendingUp,
@@ -203,7 +204,9 @@ export default function Portfolio() {
                     </p>
                   </div>
                 </div>
-                <Button variant="primary">Find Opportunities</Button>
+                <Link href="/counties">
+                  <Button variant="primary">Find Opportunities</Button>
+                </Link>
               </div>
             </Card>
           )}
@@ -325,9 +328,11 @@ export default function Portfolio() {
                             Deadline: {new Date(lien.redemptionDeadline!).toLocaleDateString()}
                           </div>
                         </div>
-                        <Button variant="secondary" size="sm" className="w-full">
-                          View Details
-                        </Button>
+                        <Link href="/portfolio">
+                          <Button variant="secondary" size="sm" className="w-full">
+                            View Details
+                          </Button>
+                        </Link>
                       </>
                     ) : (
                       <>
@@ -344,9 +349,11 @@ export default function Portfolio() {
                           )}
                         </div>
                         {!lien.reinvested && (
-                          <Button variant="primary" size="sm" className="w-full">
-                            Reinvest Funds
-                          </Button>
+                          <Link href="/counties">
+                            <Button variant="primary" size="sm" className="w-full">
+                              Reinvest Funds
+                            </Button>
+                          </Link>
                         )}
                       </>
                     )}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { Check, X, Zap, Crown, Rocket } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Card from '@/components/ui/Card'
@@ -445,9 +446,11 @@ export default function Pricing() {
             <p className="text-xl text-gray-300 mb-8">
               Join investors earning 12-24% returns on secured real estate liens
             </p>
-            <Button variant="gold" size="lg" onClick={() => window.location.href = '/dashboard'}>
-              Start Your Free Trial
-            </Button>
+            <Link href="/dashboard">
+              <Button variant="gold" size="lg">
+                Start Your Free Trial
+              </Button>
+            </Link>
             <p className="text-sm text-gray-500 mt-4">
               No credit card required · 14-day free trial · Cancel anytime
             </p>
