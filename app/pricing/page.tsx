@@ -176,9 +176,10 @@ export default function Pricing() {
           </div>
         </div>
       </div>
+    </div>
 
-      {/* Pricing Cards Section */}
-      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
+    {/* Pricing Cards Section */}
+    <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
 
           {/* Pricing Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">

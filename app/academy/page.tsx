@@ -232,9 +232,10 @@ export default function Academy() {
           </div>
         </div>
       </div>
+    </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
+    {/* Main Content */}
+    <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
         {/* Category Filters */}
         <div className="flex items-center space-x-3 mb-12 overflow-x-auto pb-2">
           {categories.map((category) => (

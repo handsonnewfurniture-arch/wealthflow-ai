@@ -147,9 +147,10 @@ export default function Portfolio() {
           </div>
         </div>
       </div>
+    </div>
 
-      {/* Portfolio Content */}
-      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
+    {/* Portfolio Content */}
+    <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
 
           {/* Portfolio Summary */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
