@@ -114,24 +114,34 @@ export default function Dashboard() {
     <div className="min-h-screen bg-navy-950">
       <Navbar />
 
-      <div className="pt-20 px-4 pb-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-8">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h1 className="text-4xl font-bold mb-2">Welcome back, {user.name.split(' ')[0]}! 👋</h1>
-                <p className="text-gray-400">Here's your tax lien portfolio overview</p>
+      {/* Modern Dashboard Hero */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pt-32 pb-12">
+          <div className="flex items-start justify-between mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-sm font-semibold text-emerald-400">Portfolio Active</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <button className="p-2 rounded-lg glass-card hover:bg-white/5">
-                  <Bell className="w-5 h-5" />
-                </button>
-                <button className="p-2 rounded-lg glass-card hover:bg-white/5">
-                  <Settings className="w-5 h-5" />
-                </button>
-              </div>
+              <h1 className="text-5xl md:text-6xl font-bold mb-4 tracking-tight">Welcome back, {user.name.split(' ')[0]}! 👋</h1>
+              <p className="text-xl text-gray-400">Here's your tax lien portfolio overview</p>
             </div>
+            <div className="flex items-center space-x-3">
+              <button className="p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all">
+                <Bell className="w-6 h-6" />
+              </button>
+              <button className="p-4 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 hover:border-white/20 hover:bg-white/10 transition-all">
+                <Settings className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
 
             {/* XP Progress Bar */}
             <Card className="p-4">

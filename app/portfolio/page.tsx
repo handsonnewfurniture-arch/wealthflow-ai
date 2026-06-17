@@ -120,13 +120,23 @@ export default function Portfolio() {
     <div className="min-h-screen bg-navy-950">
       <Navbar />
 
-      <div className="pt-20 px-4 pb-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+      {/* Modern Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pt-32 pb-12">
+          <div className="flex items-center justify-between mb-12">
             <div>
-              <h1 className="page-header mb-4">Portfolio Tracker</h1>
-              <p className="text-xl text-gray-300">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+                <DollarSign className="w-4 h-4 text-emerald-400" />
+                <span className="text-sm font-semibold text-emerald-400">Active Investments</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight">
+                Portfolio <span className="gradient-text">Tracker</span>
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-300">
                 Track your liens, monitor returns, and maximize capital velocity
               </p>
             </div>
@@ -135,6 +145,11 @@ export default function Portfolio() {
               Add Lien
             </Button>
           </div>
+        </div>
+      </div>
+
+      {/* Portfolio Content */}
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 pb-24">
 
           {/* Portfolio Summary */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
