@@ -91,9 +91,35 @@ export default function Pricing() {
       return
     }
 
-    // In production, this would redirect to Stripe Checkout
-    // For now, redirect to dashboard
-    window.location.href = '/dashboard'
+    try {
+      // Call our checkout API endpoint
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          priceId: stripePriceId,
+          // In production, get userId from auth session
+          userId: undefined,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (data.error) {
+        alert('Error creating checkout session: ' + data.error)
+        return
+      }
+
+      // Redirect to Stripe Checkout
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (error) {
+      console.error('Checkout error:', error)
+      alert('Failed to start checkout. Please try again.')
+    }
   }
 
   return (
@@ -405,7 +431,7 @@ export default function Pricing() {
               <Card className="p-6">
                 <h3 className="font-bold mb-2">Do you offer refunds?</h3>
                 <p className="text-gray-400">
-                  We offer a 30-day money-back guarantee. If you're not satisfied with WealthFlow AI within the first 30 days, contact support for a full refund.
+                  We offer a 30-day money-back guarantee. If you're not satisfied with Hands On Tax Liens within the first 30 days, contact support for a full refund.
                 </p>
               </Card>
             </div>

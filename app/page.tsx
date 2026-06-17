@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import {
   TrendingUp,
@@ -36,6 +37,18 @@ export default function Home() {
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <Image
+              src="/logo.png"
+              alt="Hands On Tax Liens"
+              width={400}
+              height={300}
+              className="w-auto h-auto max-w-md"
+              priority
+            />
+          </div>
+
           <div className="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 rounded-full px-4 py-2 mb-8">
             <Zap className="w-4 h-4 text-emerald-400" />
             <span className="text-sm text-emerald-400 font-semibold">AI-Powered Tax Lien Intelligence</span>
@@ -506,7 +519,7 @@ export default function Home() {
             <Card>
               <h3 className="text-lg font-bold mb-2">Is this legal financial advice?</h3>
               <p className="text-gray-400">
-                No. WealthFlow AI provides research, education, and data tools only. It is not financial, legal, tax, or investment advice. Always consult licensed professionals before making investment decisions.
+                No. Hands On Tax Liens provides research, education, and data tools only. It is not financial, legal, tax, or investment advice. Always consult licensed professionals before making investment decisions.
               </p>
             </Card>
           </div>
@@ -553,7 +566,7 @@ export default function Home() {
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <TrendingUp className="w-6 h-6 text-emerald-400" />
-                <span className="font-bold gradient-text">WealthFlow AI</span>
+                <span className="font-bold gradient-text">Hands On Tax Liens</span>
               </div>
               <p className="text-sm text-gray-400">
                 Tax lien intelligence platform for serious investors.
@@ -591,9 +604,9 @@ export default function Home() {
 
           <div className="border-t border-white/10 mt-12 pt-8 text-center text-sm text-gray-500">
             <p className="mb-4">
-              <strong>Disclaimer:</strong> WealthFlow AI provides research, education, and data tools only. It is not financial, legal, tax, or investment advice. Users must perform their own due diligence and consult licensed professionals. Past performance does not guarantee future results.
+              <strong>Disclaimer:</strong> Hands On Tax Liens provides research, education, and data tools only. It is not financial, legal, tax, or investment advice. Users must perform their own due diligence and consult licensed professionals. Past performance does not guarantee future results.
             </p>
-            <p>© 2026 WealthFlow AI. All rights reserved.</p>
+            <p>© 2026 Hands On Tax Liens. All rights reserved.</p>
           </div>
         </div>
       </footer>

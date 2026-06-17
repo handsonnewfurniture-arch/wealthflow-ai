@@ -10,9 +10,13 @@
  *   npm run import:st-johns "123e4567-e89b-12d3-a456-426614174000" --dry-run
  */
 
+import { config } from 'dotenv'
 import { createClient } from '@supabase/supabase-js'
 import * as fs from 'fs'
 import * as path from 'path'
+
+// Load environment variables from .env.local
+config({ path: path.join(process.cwd(), '.env.local') })
 
 // Config
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -65,19 +69,39 @@ async function importStJohns(sellerId: string, dryRun: boolean = false) {
   console.log('🔄 Transforming data...')
   const listings = stJohnsData.map((item, index) => {
     // Calculate current value with accrued interest
-    const purchaseDate = new Date(item.original_lien_date || item.certificate_date)
+    // Use auction_date as reference since we don't have original purchase date
+    const auctionDateStr = item.auction_date || item.original_lien_date || item.certificate_date
+    const purchaseDate = auctionDateStr ? new Date(auctionDateStr) : new Date()
     const today = new Date()
+
+    // Validate the date
+    if (isNaN(purchaseDate.getTime())) {
+      throw new Error(`Invalid date for item ${index}: ${auctionDateStr}`)
+    }
+
     const yearsHeld = (today.getTime() - purchaseDate.getTime()) / (1000 * 60 * 60 * 24 * 365)
-    const interestRate = parseFloat(item.interest_rate) || 18
+    const interestRate = parseFloat(item.interest_rate) || 0.18 // Convert to decimal if needed
     const originalAmount = parseFloat(item.face_value) || parseFloat(item.lien_amount) || 0
-    const accruedValue = originalAmount * Math.pow(1 + (interestRate / 100), yearsHeld)
+    const accruedValue = originalAmount * Math.pow(1 + interestRate, yearsHeld)
+
+    // Database limit for NUMERIC(12,2) is 9,999,999,999.99
+    const MAX_NUMERIC = 9999999999.99
 
     // Calculate buy now price (15% markup on accrued value)
-    const buyNowPrice = Math.round(accruedValue * 1.15 * 100) / 100
+    // Cap at MAX_NUMERIC to prevent overflow
+    const buyNowPrice = Math.min(
+      Math.round(accruedValue * 1.15 * 100) / 100,
+      MAX_NUMERIC
+    )
 
-    // Calculate redemption deadline (typically 2 years from purchase)
+    // Cap estimated value as well
+    const estimatedValue = parseFloat(item.assessed_value) || parseFloat(item.property_value) || null
+    const cappedEstimatedValue = estimatedValue ? Math.min(estimatedValue, MAX_NUMERIC) : null
+
+    // Calculate redemption deadline (use redemption_period_months if available)
+    const redemptionMonths = parseInt(item.redemption_period_months) || 24
     const redemptionDeadline = new Date(purchaseDate)
-    redemptionDeadline.setFullYear(redemptionDeadline.getFullYear() + 2)
+    redemptionDeadline.setMonth(redemptionDeadline.getMonth() + redemptionMonths)
 
     if ((index + 1) % 100 === 0) {
       process.stdout.write(`  Processed ${index + 1}/${stJohnsData.length}...\r`)
@@ -93,15 +117,17 @@ async function importStJohns(sellerId: string, dryRun: boolean = false) {
       state: 'FL',
       auction_name: item.auction_name || null,
       auction_date_time: item.auction_date ? new Date(item.auction_date).toISOString() : null,
-      redemption_period: '2 years',
+      redemption_period: `${redemptionMonths} months`,
       buy_now_price: buyNowPrice,
-      estimated_value: parseFloat(item.assessed_value) || parseFloat(item.property_value) || null,
+      estimated_value: cappedEstimatedValue,
       notes: [
-        `Original Certificate: ${item.certificate_number || 'N/A'}`,
-        `Interest Rate: ${interestRate}%`,
-        `Original Amount: $${originalAmount.toFixed(2)}`,
-        `Current Value: $${accruedValue.toFixed(2)}`
-      ].join('\n'),
+        item.notes || '',
+        `Interest Rate: ${(interestRate * 100).toFixed(2)}%`,
+        `Lien Amount: $${originalAmount.toFixed(2)}`,
+        `Accrued Value: $${accruedValue.toFixed(2)}`,
+        item.property_type ? `Property Type: ${item.property_type}` : '',
+        item.flood_zone ? `Flood Zone: ${item.flood_zone}` : ''
+      ].filter(Boolean).join('\n'),
       legal_disclaimer: LEGAL_DISCLAIMER,
       source: 'st_johns_import',
       source_metadata: {
@@ -109,7 +135,12 @@ async function importStJohns(sellerId: string, dryRun: boolean = false) {
         original_face_value: originalAmount,
         accrued_value: accruedValue,
         years_held: yearsHeld,
-        redemption_deadline: redemptionDeadline.toISOString()
+        redemption_deadline: redemptionDeadline.toISOString(),
+        latitude: item.latitude,
+        longitude: item.longitude,
+        property_type: item.property_type,
+        flood_zone: item.flood_zone,
+        market_value: parseFloat(item.market_value) || null
       },
       status: 'active',
       published_at: new Date().toISOString()
@@ -141,21 +172,36 @@ async function importStJohns(sellerId: string, dryRun: boolean = false) {
   console.log('📥 Importing to database...')
   console.log('(This may take a minute...)')
 
-  const { data, error } = await supabase
-    .from('marketplace_listings')
-    .upsert(listings, {
-      onConflict: 'parcel_apn,county,state',
-      ignoreDuplicates: false
-    })
-    .select('id')
+  // Insert listings in batches to avoid timeouts
+  const batchSize = 100
+  let imported = 0
+  const errors = []
 
-  if (error) {
-    console.error('❌ Import failed:', error.message)
+  for (let i = 0; i < listings.length; i += batchSize) {
+    const batch = listings.slice(i, i + batchSize)
+
+    const { data, error } = await supabase
+      .from('marketplace_listings')
+      .insert(batch)
+      .select('id')
+
+    if (error) {
+      errors.push({ batch: i / batchSize + 1, error: error.message })
+      console.error(`\n❌ Batch ${i / batchSize + 1} failed:`, error.message)
+    } else {
+      imported += data?.length || 0
+      process.stdout.write(`  Imported ${imported}/${listings.length}...\r`)
+    }
+  }
+
+  if (errors.length > 0) {
+    console.error(`\n❌ Import completed with ${errors.length} errors`)
+    console.error('First error:', errors[0])
     process.exit(1)
   }
 
   console.log(`\n✅ Import successful!`)
-  console.log(`   Imported: ${data?.length || 0} listings`)
+  console.log(`   Imported: ${imported} listings`)
   console.log('')
 
   // Create audit log

@@ -135,7 +135,7 @@ export default function SavedListings() {
                   <p className="text-gray-400 mb-6">
                     You haven't saved any listings yet. Browse the marketplace to find opportunities.
                   </p>
-                  <Button variant="primary" asChild>
+                  <Button variant="primary">
                     <Link href="/marketplace">
                       Browse Marketplace
                     </Link>
@@ -238,14 +238,14 @@ export default function SavedListings() {
                           {/* Actions */}
                           <div className="lg:col-span-3 flex flex-col justify-between space-y-2">
                             <div className="space-y-2">
-                              <Button variant="primary" size="sm" className="w-full" asChild>
+                              <Button variant="primary" size="sm" className="w-full">
                                 <Link href={`/marketplace/${listing.id}`}>
                                   <FileText className="w-4 h-4 mr-2" />
                                   View Details
                                 </Link>
                               </Button>
                               {listing.status === 'active' && listing.buy_now_price && (
-                                <Button variant="secondary" size="sm" className="w-full" asChild>
+                                <Button variant="secondary" size="sm" className="w-full">
                                   <Link href={`/marketplace/${listing.id}`}>
                                     <ShoppingCart className="w-4 h-4 mr-2" />
                                     Buy Now

@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   try {
-    const { priceId, userId, email } = await req.json()
+    const { priceId, userId } = await req.json()
 
     if (!priceId) {
       return NextResponse.json(
@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
@@ -27,21 +28,25 @@ export async function POST(req: NextRequest) {
       ],
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
-      customer_email: email,
       metadata: {
-        userId,
+        userId: userId || 'guest', // In production, get from auth session
       },
+      // Automatically create customer in Stripe
+      customer_email: undefined, // In production, get from auth session
+      // Allow promo codes
+      allow_promotion_codes: true,
+      // Trial period (7 days free)
       subscription_data: {
+        trial_period_days: 7,
         metadata: {
-          userId,
+          userId: userId || 'guest',
         },
-        trial_period_days: 14, // 14-day free trial
       },
     })
 
     return NextResponse.json({ sessionId: session.id, url: session.url })
   } catch (error: any) {
-    console.error('Error creating checkout session:', error)
+    console.error('Checkout error:', error)
     return NextResponse.json(
       { error: error.message },
       { status: 500 }

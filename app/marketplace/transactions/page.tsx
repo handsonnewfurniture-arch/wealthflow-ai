@@ -147,7 +147,7 @@ export default function Transactions() {
                   <p className="text-gray-400 mb-6">
                     Your marketplace activity will appear here once you start bidding or purchasing.
                   </p>
-                  <Button variant="primary" asChild>
+                  <Button variant="primary">
                     <Link href="/marketplace">
                       Browse Marketplace
                     </Link>

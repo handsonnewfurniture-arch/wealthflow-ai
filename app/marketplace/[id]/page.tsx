@@ -183,12 +183,12 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
               <AlertTriangle className="w-16 h-16 text-red-400 mx-auto mb-4" />
               <h2 className="text-2xl font-bold mb-2">Listing Not Found</h2>
               <p className="text-gray-400 mb-6">{error || 'This listing does not exist or has been removed.'}</p>
-              <Button variant="secondary" asChild>
-                <Link href="/marketplace">
+              <Link href="/marketplace">
+                <Button variant="secondary">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Back to Marketplace
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </Card>
           </div>
         </div>
@@ -207,12 +207,12 @@ export default function ListingDetail({ params }: { params: { id: string } }) {
       <div className="pt-20 px-4 pb-12">
         <div className="max-w-7xl mx-auto">
           {/* Back Button */}
-          <Button variant="ghost" size="sm" className="mb-6" asChild>
-            <Link href="/marketplace">
+          <Link href="/marketplace">
+            <Button variant="ghost" size="sm" className="mb-6">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Marketplace
-            </Link>
-          </Button>
+            </Button>
+          </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}

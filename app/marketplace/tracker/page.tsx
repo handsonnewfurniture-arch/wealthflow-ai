@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -29,7 +29,7 @@ interface PurchaseWithRole extends PurchaseTrackerItem {
   user_role: UserRole
 }
 
-export default function PurchaseTracker() {
+function PurchaseTrackerContent() {
   const searchParams = useSearchParams()
   const highlightId = searchParams.get('highlight')
 
@@ -225,7 +225,7 @@ export default function PurchaseTracker() {
                       ? "You haven't purchased any listings yet."
                       : "You haven't sold any listings yet."}
                   </p>
-                  <Button variant="primary" asChild>
+                  <Button variant="primary">
                     <Link href="/marketplace">
                       Browse Marketplace
                     </Link>
@@ -339,7 +339,7 @@ export default function PurchaseTracker() {
                         {/* Right: Actions */}
                         <div className="lg:col-span-2 flex flex-col justify-between space-y-2">
                           {purchase.listing && (
-                            <Button variant="secondary" size="sm" asChild className="w-full">
+                            <Button variant="secondary" size="sm" className="w-full">
                               <Link href={`/marketplace/${purchase.listing.id}`}>
                                 <FileText className="w-4 h-4 mr-2" />
                                 View Listing
@@ -348,7 +348,7 @@ export default function PurchaseTracker() {
                           )}
 
                           {purchase.assignment_document_url && (
-                            <Button variant="secondary" size="sm" asChild className="w-full">
+                            <Button variant="secondary" size="sm" className="w-full">
                               <a href={purchase.assignment_document_url} target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="w-4 h-4 mr-2" />
                                 Assignment Doc
@@ -357,7 +357,7 @@ export default function PurchaseTracker() {
                           )}
 
                           {purchase.purchase_receipt_url && (
-                            <Button variant="secondary" size="sm" asChild className="w-full">
+                            <Button variant="secondary" size="sm" className="w-full">
                               <a href={purchase.purchase_receipt_url} target="_blank" rel="noopener noreferrer">
                                 <ExternalLink className="w-4 h-4 mr-2" />
                                 Receipt
@@ -400,5 +400,26 @@ export default function PurchaseTracker() {
         </div>
       </div>
     </div>
+  )
+}
+
+
+export default function PurchaseTracker() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen">
+        <Navbar />
+        <div className="pt-20 px-4 pb-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+              <span className="ml-3 text-gray-600">Loading tracker...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }>
+      <PurchaseTrackerContent />
+    </Suspense>
   )
 }
