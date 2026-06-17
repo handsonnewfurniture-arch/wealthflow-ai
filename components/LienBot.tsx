@@ -67,7 +67,7 @@ export default function LienBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm LienBot, your AI assistant powered by Ted Thomas's tax lien expertise. Ask me anything about tax liens, investment strategies, or navigating this site!"
+      content: "Hi! I'm LienBot, your AI assistant powered by Ted Thomas's tax lien expertise AND Napoleon Hill's success philosophy. Ask me about tax lien strategies, mindset, motivation, or navigating this site!"
     }
   ])
   const [input, setInput] = useState('')
@@ -286,7 +286,7 @@ export default function LienBot() {
               </div>
               <div>
                 <h3 className="font-bold text-white">LienBot</h3>
-                <p className="text-xs text-orange-100">Powered by Ted Thomas</p>
+                <p className="text-xs text-orange-100">Ted Thomas + Napoleon Hill</p>
               </div>
             </div>
             <button
@@ -350,7 +350,7 @@ export default function LienBot() {
               </button>
             </div>
             <p className="text-xs text-gray-500 mt-2 text-center">
-              Trained on Ted Thomas's tax lien expertise
+              Trained on Ted Thomas + Napoleon Hill
             </p>
           </div>
         </div>
