@@ -27,8 +27,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
-  const supabase = createSupabaseClient()
+
+  // Safely create supabase client with error handling
+  let supabase: ReturnType<typeof createSupabaseClient>
+  try {
+    supabase = createSupabaseClient()
+  } catch (err) {
+    console.error('Failed to create Supabase client:', err)
+    setError('Failed to initialize authentication')
+    setLoading(false)
+    // Return a fallback to prevent crashes
+    return <>{children}</>
+  }
 
   useEffect(() => {
     // Get initial session
