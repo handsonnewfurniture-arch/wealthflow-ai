@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { BookOpen, Award, Play, Lock, CheckCircle, Clock, TrendingUp } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Card from '@/components/ui/Card'
@@ -9,6 +10,10 @@ import Button from '@/components/ui/Button'
 
 export default function Academy() {
   const [selectedCategory, setSelectedCategory] = useState('all')
+
+  const handleStartLesson = (lessonTitle: string) => {
+    alert(`"${lessonTitle}" lesson is coming soon! This feature will be available once authentication is enabled.`)
+  }
 
   const categories = [
     { id: 'all', name: 'All Lessons', count: 10 },
@@ -292,6 +297,7 @@ export default function Academy() {
                     variant={lesson.completed ? 'secondary' : 'primary'}
                     className="w-full"
                     disabled={isLocked}
+                    onClick={() => !isLocked && handleStartLesson(lesson.title)}
                   >
                     {isLocked ? (
                       <>
@@ -354,9 +360,11 @@ export default function Academy() {
             <p className="text-gray-300 mb-6">
               Upgrade to Elite for complete access to advanced strategies and exclusive content.
             </p>
-            <Button variant="gold">
-              Upgrade to Elite
-            </Button>
+            <Link href="/pricing">
+              <Button variant="gold">
+                Upgrade to Elite
+              </Button>
+            </Link>
           </Card>
         </div>
       </div>
