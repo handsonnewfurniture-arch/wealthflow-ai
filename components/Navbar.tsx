@@ -46,6 +46,9 @@ export default function Navbar() {
             <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Blog
             </Link>
+            <Link href="/legal" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              Legal
+            </Link>
             <Link href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Pricing
             </Link>

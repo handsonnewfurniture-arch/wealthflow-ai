@@ -1,0 +1,5 @@
+2026-06-18 11:50:24,234 - Florida.St Johns - INFO - Loading upcoming auction data from /Users/tigermcbride/Desktop/Projects/wealthflow-ai/scrapers/florida/2025_delinquent_real_estate.csv...
+2026-06-18 11:50:24,248 - Florida.St Johns - INFO - Loaded 4535 upcoming auction properties
+2026-06-18 11:50:24,248 - Florida.St Johns - INFO - Columns: ['parcel_id', 'owner_name', 'delinquent_amount', 'property_description', 'address', 'homestead', 'line_number']
+2026-06-18 11:50:24,298 - Florida.St Johns - INFO - Limiting to first 1000 liens for testing
+2026-06-18 11:50:24,298 - Florida.St Johns - INFO - Successfully parsed 1000 upcoming auction liens

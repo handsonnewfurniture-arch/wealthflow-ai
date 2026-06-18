@@ -51,6 +51,8 @@ build/
 # Scrapers
 scrapers/logs/
 scrapers/data/
+scrapers/**/*.pdf
+scrapers/**/*.csv
 
 # IDEs
 .vscode/
