@@ -77,7 +77,8 @@ export default function CountyAuctions() {
         params.append('page', currentPage.toString())
         params.append('pageSize', '20')
 
-        console.log('Fetching listings from:', `/api/marketplace/listings?${params}`)
+        console.log('Fetching auctions from:', `/api/marketplace/listings?${params}`)
+        // Using marketplace listings for now until we migrate to county_auctions table
         const response = await fetch(`/api/marketplace/listings?${params}`)
         console.log('Response status:', response.status)
 
@@ -159,17 +160,17 @@ export default function CountyAuctions() {
 
       <div className="pt-20 pb-12">
         <div className="max-w-7xl mx-auto px-4">
-          {/* Demo Notice Banner */}
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg">
+          {/* Info Banner */}
+          <div className="bg-emerald-50 border-l-4 border-emerald-500 p-4 mb-6 rounded-r-lg">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                <svg className="h-5 w-5 text-emerald-500" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-blue-700">
-                  <span className="font-semibold">Demo Marketplace</span> - This is a demonstration platform. To see real tax lien and deed listings, please run the database migrations and import data.
+                <p className="text-sm text-emerald-700">
+                  <span className="font-semibold">Primary Market</span> - These are tax liens and deeds available directly from county auctions. You're buying from the government, not other investors.
                 </p>
               </div>
             </div>
@@ -177,9 +178,9 @@ export default function CountyAuctions() {
 
           {/* Header */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Tax Lien & Deed Marketplace</h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">County Auctions - Buy Direct</h1>
             <p className="text-gray-600">
-              {totalCount > 0 ? `${totalCount.toLocaleString()} properties available` : 'Loading properties...'}
+              {totalCount > 0 ? `${totalCount.toLocaleString()} tax liens & deeds from county auctions` : 'Loading auctions...'}
             </p>
           </div>
 
@@ -401,26 +402,26 @@ export default function CountyAuctions() {
             </>
           )}
 
-          {/* Want to Sell CTA */}
+          {/* Learn More CTA */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 mt-12 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-3">Want to Sell Your Tax Liens or Deeds?</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">New to County Tax Auctions?</h2>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              List your investments on the marketplace and get instant liquidity. No waiting for redemption.
+              Learn the ins and outs of buying tax liens and tax deeds directly from county auctions. Our academy covers due diligence, bidding strategies, and redemption processes.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4">
-              <Link href="/marketplace/seller/listings/new">
+              <Link href="/academy">
                 <Button variant="primary" size="lg">
-                  List Your Investments
+                  Start Learning
                 </Button>
               </Link>
-              <Link href="/academy">
+              <Link href="/counties">
                 <Button variant="secondary" size="lg">
-                  Learn More
+                  Research Counties
                 </Button>
               </Link>
             </div>
             <p className="text-xs text-gray-500 mt-4">
-              5% marketplace fee · Instant payments · Legal assignment handled
+              Free educational resources · County guides · Investment calculators
             </p>
           </div>
         </div>

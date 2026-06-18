@@ -31,6 +31,9 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link href="/auctions" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
+              Auctions
+            </Link>
             <Link href="/marketplace" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Marketplace
             </Link>
@@ -42,9 +45,6 @@ export default function Navbar() {
             </Link>
             <Link href="/blog" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Blog
-            </Link>
-            <Link href="/legal" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-              Legal
             </Link>
             <Link href="/pricing" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
               Pricing
@@ -126,6 +126,13 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-200 bg-white">
           <div className="px-4 py-6 space-y-4">
+            <Link
+              href="/auctions"
+              className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Auctions
+            </Link>
             <Link
               href="/marketplace"
               className="block text-gray-700 hover:text-blue-600 transition-colors py-2 font-medium"
