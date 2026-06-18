@@ -24,7 +24,7 @@ import Badge from '@/components/ui/Badge'
 import Button from '@/components/ui/Button'
 import type { MarketplaceListing } from '@/lib/marketplace/types'
 
-export default function Marketplace() {
+export default function CountyAuctions() {
   const [searchQuery, setSearchQuery] = useState('')
   const [stateFilter, setStateFilter] = useState('all')
   const [countyFilter, setCountyFilter] = useState('')
